@@ -7,6 +7,7 @@ namespace MusicApp_Forms
     {
         private IWavePlayer _waveOutDevice;
         private AudioFileReader _audioFileReader;
+        private VolumeSlider _volumeSlider;
         private List<string> _musicFiles;
         private int _currentIndex = -1;
         private System.Windows.Forms.Timer _timer;
@@ -135,6 +136,7 @@ namespace MusicApp_Forms
             _audioFileReader?.Dispose();
             _waveOutDevice?.Dispose();
             base.OnFormClosing(e);
+            base.OnFormClosing(e);
         }
 
         private void volumeSlider_VolumeChanged(object sender, EventArgs e)
@@ -152,6 +154,19 @@ namespace MusicApp_Forms
             }
         }
 
+        private void volumeSlider_VolumeChanged(object sender, EventArgs e)
+        {
+            if (volumeSlider.Volume > 0.0f)
+            {
+                if (_waveOutDevice != null)
+                {
+                    _waveOutDevice.Volume = volumeSlider.Volume;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Volume cannot be set to zero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         private void VolumeTrackbar_Scroll(object sender, EventArgs e)
         {
             if (_audioFileReader != null)

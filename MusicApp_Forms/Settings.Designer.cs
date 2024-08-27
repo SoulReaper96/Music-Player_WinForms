@@ -38,10 +38,6 @@
             panel3 = new Panel();
             label2 = new Label();
             panel1 = new Panel();
-            customButtons1 = new CustomButtons();
-            customButtons2 = new CustomButtons();
-            customButtons3 = new CustomButtons();
-            customButtons4 = new CustomButtons();
             panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)MinApp_pb).BeginInit();
             ((System.ComponentModel.ISupportInitialize)MaxApp_pb).BeginInit();
@@ -148,68 +144,12 @@
             // panel1
             // 
             panel1.BackColor = Color.Black;
-            panel1.Controls.Add(customButtons4);
-            panel1.Controls.Add(customButtons3);
-            panel1.Controls.Add(customButtons2);
-            panel1.Controls.Add(customButtons1);
             panel1.Controls.Add(panel3);
             panel1.ForeColor = Color.Yellow;
             panel1.Location = new Point(12, 54);
             panel1.Name = "panel1";
             panel1.Size = new Size(258, 262);
             panel1.TabIndex = 16;
-            // 
-            // customButtons1
-            // 
-            customButtons1.BackColor = Color.Yellow;
-            customButtons1.CornerRadius = 30;
-            customButtons1.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            customButtons1.ForeColor = Color.Black;
-            customButtons1.Location = new Point(37, 52);
-            customButtons1.Name = "customButtons1";
-            customButtons1.Size = new Size(183, 26);
-            customButtons1.TabIndex = 18;
-            customButtons1.Text = "Themes/Skins";
-            customButtons1.UseVisualStyleBackColor = false;
-            // 
-            // customButtons2
-            // 
-            customButtons2.BackColor = Color.Yellow;
-            customButtons2.CornerRadius = 30;
-            customButtons2.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            customButtons2.ForeColor = Color.Black;
-            customButtons2.Location = new Point(37, 84);
-            customButtons2.Name = "customButtons2";
-            customButtons2.Size = new Size(183, 26);
-            customButtons2.TabIndex = 19;
-            customButtons2.Text = "Font Size and Style";
-            customButtons2.UseVisualStyleBackColor = false;
-            // 
-            // customButtons3
-            // 
-            customButtons3.BackColor = Color.Yellow;
-            customButtons3.CornerRadius = 30;
-            customButtons3.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            customButtons3.ForeColor = Color.Black;
-            customButtons3.Location = new Point(37, 116);
-            customButtons3.Name = "customButtons3";
-            customButtons3.Size = new Size(183, 26);
-            customButtons3.TabIndex = 20;
-            customButtons3.Text = "Light/Dark Mode";
-            customButtons3.UseVisualStyleBackColor = false;
-            // 
-            // customButtons4
-            // 
-            customButtons4.BackColor = Color.Yellow;
-            customButtons4.CornerRadius = 30;
-            customButtons4.Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            customButtons4.ForeColor = Color.Black;
-            customButtons4.Location = new Point(37, 148);
-            customButtons4.Name = "customButtons4";
-            customButtons4.Size = new Size(183, 26);
-            customButtons4.TabIndex = 21;
-            customButtons4.Text = "Themes/Skins";
-            customButtons4.UseVisualStyleBackColor = false;
             // 
             // Settings
             // 
@@ -246,9 +186,5 @@
         private Panel panel3;
         private Label label2;
         private Panel panel1;
-        private CustomButtons customButtons1;
-        private CustomButtons customButtons4;
-        private CustomButtons customButtons3;
-        private CustomButtons customButtons2;
     }
 }

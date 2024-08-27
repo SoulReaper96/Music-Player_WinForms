@@ -1,5 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
 using NAudio.Wave;
-using NAudio.Gui;
 
 namespace MusicApp_Forms
 {
@@ -7,7 +9,6 @@ namespace MusicApp_Forms
     {
         private IWavePlayer _waveOutDevice;
         private AudioFileReader _audioFileReader;
-        private VolumeSlider _volumeSlider;
         private List<string> _musicFiles;
         private int _currentIndex = -1;
         private System.Windows.Forms.Timer _timer;
@@ -17,27 +18,25 @@ namespace MusicApp_Forms
         {
             InitializeComponent();
             _musicFiles = new List<string>();
-            volumeSlider.Volume = 0.5f;
 
-            _timer = new System.Windows.Forms.Timer();
-            _timer.Interval = 1000;
+            _timer = new System.Windows.Forms.Timer { Interval = 1000 };
             _timer.Tick += Timer1_Tick;
 
             _songList = new SongList();
-            _songList._lstSongs.SelectedIndexChanged += new EventHandler(_lstSongs_SelectedIndexChanged);
+            _songList._lstSongs.SelectedIndexChanged += _lstSongs_SelectedIndexChanged;
         }
 
-        private void _lstSongs_SelectedIndexChanged(object? sender, EventArgs e)
+        private void _lstSongs_SelectedIndexChanged(object sender, EventArgs e)
         {
             _currentIndex = _songList._lstSongs.SelectedIndex;
             PlaySelectedFile();
         }
 
-        private void Timer1_Tick(object? sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             if (_audioFileReader != null)
             {
-                lblElapsed.Text = $"{_audioFileReader.CurrentTime.ToString(@"mm\:ss")} / {_audioFileReader.TotalTime.ToString(@"mm\:ss")}";
+                lblElapsed.Text = $"{_audioFileReader.CurrentTime:mm\\:ss} / {_audioFileReader.TotalTime:mm\\:ss}";
             }
         }
 
@@ -56,7 +55,7 @@ namespace MusicApp_Forms
                         _songList._lstSongs.Items.Add(System.IO.Path.GetFileName(file));
                     }
 
-                    lblStatus.Text = "Status: Loaded " + openFileDialog.FileNames.Length + " file(s)";
+                    lblStatus.Text = $"Status: Loaded {openFileDialog.FileNames.Length} file(s)";
                     _songList.Show();
                 }
             }
@@ -77,8 +76,7 @@ namespace MusicApp_Forms
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            _waveOutDevice?.Stop();
-            _timer.Stop();
+            StopPlayback();
             lblStatus.Text = "Status: Stopped";
             lblElapsed.Text = "00:00 / 00:00";
         }
@@ -103,54 +101,36 @@ namespace MusicApp_Forms
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void PlaySelectedFile()
         {
             if (_currentIndex >= 0)
             {
-                string _selectedFile = _musicFiles[_currentIndex];
-                if (_waveOutDevice != null)
-                {
-                    _waveOutDevice.Stop();
-                    _audioFileReader.Dispose();
-                }
+                string selectedFile = _musicFiles[_currentIndex];
+                StopPlayback();
 
                 _waveOutDevice = new WaveOutEvent();
-                _audioFileReader = new AudioFileReader(_selectedFile);
+                _audioFileReader = new AudioFileReader(selectedFile);
 
                 _waveOutDevice.Init(_audioFileReader);
-                _waveOutDevice.Volume = volumeSlider.Volume;
                 _waveOutDevice.Play();
-                lblStatus.Text = "Status: Playing " + System.IO.Path.GetFileName(_selectedFile);
+                lblStatus.Text = $"Status: Playing {System.IO.Path.GetFileName(selectedFile)}";
                 _timer.Start();
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
+        private void StopPlayback()
         {
             _waveOutDevice?.Stop();
             _audioFileReader?.Dispose();
             _waveOutDevice?.Dispose();
-            base.OnFormClosing(e);
+            _audioFileReader = null;
+            _waveOutDevice = null;
         }
 
-        private void volumeSlider_VolumeChanged(object sender, EventArgs e)
+        protected override void OnFormClosing(FormClosingEventArgs e)
         {
-            if (volumeSlider.Volume > 0.0f)
-            {
-                if (_waveOutDevice != null)
-                {
-                    _waveOutDevice.Volume = volumeSlider.Volume;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Volume cannot be set to zero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            StopPlayback();
+            base.OnFormClosing(e);
         }
 
         private void CloseApp_pb_Click(object sender, EventArgs e)
@@ -160,17 +140,17 @@ namespace MusicApp_Forms
 
         private void MaxApp_pb_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Maximized;
         }
 
         private void RestApp_pb_Click(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Normal;
+            WindowState = FormWindowState.Normal;
         }
 
         private void MinApp_pb_Click_1(object sender, EventArgs e)
         {
-            this.WindowState = FormWindowState.Minimized;
+            WindowState = FormWindowState.Minimized;
         }
 
         private void btnShowList_Click(object sender, EventArgs e)

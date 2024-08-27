@@ -43,8 +43,8 @@
             timer1 = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
             panel3 = new Panel();
-            volumeSlider = new NAudio.Gui.VolumeSlider();
             panel2 = new Panel();
+            Volume_lbl = new Label();
             label1 = new Label();
             MinApp_pb = new PictureBox();
             MaxApp_pb = new PictureBox();
@@ -105,7 +105,7 @@
             // lblCurrentSong
             // 
             lblCurrentSong.AutoSize = true;
-            lblCurrentSong.Location = new Point(333, 6);
+            lblCurrentSong.Location = new Point(332, 10);
             lblCurrentSong.Name = "lblCurrentSong";
             lblCurrentSong.Size = new Size(48, 15);
             lblCurrentSong.TabIndex = 8;
@@ -127,7 +127,7 @@
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(151, 6);
+            lblStatus.Location = new Point(156, 9);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(45, 15);
             lblStatus.TabIndex = 7;
@@ -191,7 +191,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel3
             // 
@@ -202,17 +201,10 @@
             panel3.Size = new Size(389, 259);
             panel3.TabIndex = 13;
             // 
-            // volumeSlider
-            // 
-            volumeSlider.Location = new Point(572, 5);
-            volumeSlider.Name = "volumeSlider";
-            volumeSlider.Size = new Size(96, 16);
-            volumeSlider.TabIndex = 10;
-            volumeSlider.VolumeChanged += volumeSlider_VolumeChanged;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.Yellow;
+            panel2.Controls.Add(Volume_lbl);
             panel2.Controls.Add(label1);
             panel2.Controls.Add(MinApp_pb);
             panel2.Controls.Add(MaxApp_pb);
@@ -223,6 +215,15 @@
             panel2.Name = "panel2";
             panel2.Size = new Size(672, 35);
             panel2.TabIndex = 14;
+            // 
+            // Volume_lbl
+            // 
+            Volume_lbl.AutoSize = true;
+            Volume_lbl.Location = new Point(399, 9);
+            Volume_lbl.Name = "Volume_lbl";
+            Volume_lbl.Size = new Size(47, 15);
+            Volume_lbl.TabIndex = 10;
+            Volume_lbl.Text = "volume";
             // 
             // label1
             // 
@@ -290,14 +291,13 @@
             // panel4
             // 
             panel4.BackColor = Color.Yellow;
-            panel4.Controls.Add(volumeSlider);
             panel4.Controls.Add(lblElapsed);
             panel4.Controls.Add(lblStatus);
             panel4.Controls.Add(lblCurrentSong);
             panel4.Dock = DockStyle.Bottom;
-            panel4.Location = new Point(0, 470);
+            panel4.Location = new Point(0, 432);
             panel4.Name = "panel4";
-            panel4.Size = new Size(672, 30);
+            panel4.Size = new Size(672, 36);
             panel4.TabIndex = 15;
             // 
             // panel5
@@ -306,7 +306,7 @@
             panel5.Dock = DockStyle.Right;
             panel5.Location = new Point(642, 35);
             panel5.Name = "panel5";
-            panel5.Size = new Size(30, 347);
+            panel5.Size = new Size(30, 309);
             panel5.TabIndex = 16;
             // 
             // panel6
@@ -315,7 +315,7 @@
             panel6.Dock = DockStyle.Left;
             panel6.Location = new Point(0, 35);
             panel6.Name = "panel6";
-            panel6.Size = new Size(30, 347);
+            panel6.Size = new Size(30, 309);
             panel6.TabIndex = 17;
             // 
             // panel1
@@ -336,7 +336,7 @@
             panel1.Controls.Add(btnPrevious);
             panel1.Controls.Add(btnPause);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 382);
+            panel1.Location = new Point(0, 344);
             panel1.Name = "panel1";
             panel1.Size = new Size(672, 88);
             panel1.TabIndex = 11;
@@ -424,7 +424,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Black;
-            ClientSize = new Size(672, 500);
+            ClientSize = new Size(672, 468);
             Controls.Add(panel5);
             Controls.Add(panel6);
             Controls.Add(panel1);
@@ -470,7 +470,6 @@
         private Panel panel5;
         private Panel panel6;
         private Panel panel1;
-        private NAudio.Gui.VolumeSlider volumeSlider;
         private PictureBox RestApp_pb;
         private PictureBox CloseApp_pb;
         private PictureBox MaxApp_pb;
@@ -483,5 +482,6 @@
         private Button btnRepeat;
         private Button btnSettings;
         private Button btnMenu;
+        private Label Volume_lbl;
     }
 }

@@ -32,3 +32,39 @@ G:\Studies\MusicApp_Forms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms
 G:\Studies\MusicApp_Forms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp.70CA75B0.Up2Date
 G:\Studies\MusicApp_Forms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.SongList.resources
 G:\Studies\MusicApp_Forms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.Settings.resources
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.csproj.AssemblyReference.cache
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\Interop.WMPLib.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\AxInterop.WMPLib.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.csproj.ResolveComReference.cache
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.MusicPlayer.resources
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.Properties.Resources.resources
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.Settings.resources
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.SongList.resources
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.csproj.GenerateResource.cache
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.GeneratedMSBuildEditorConfig.editorconfig
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.AssemblyInfoInputs.cache
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.AssemblyInfo.cs
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.csproj.CoreCompileInputs.cache
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.sourcelink.json
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\refint\MusicApp_Forms.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.pdb
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\MusicApp_Forms.exe
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\MusicApp_Forms.deps.json
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\MusicApp_Forms.runtimeconfig.json
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\MusicApp_Forms.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\MusicApp_Forms.pdb
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\MetroSet UI.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.Asio.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.Core.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.Midi.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.Wasapi.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.WinForms.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\NAudio.WinMM.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\Interop.WMPLib.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debug\net8.0-windows\AxInterop.WMPLib.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp.70CA75B0.Up2Date
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.genruntimeconfig.cache
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\ref\MusicApp_Forms.dll
+G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.CustomVolumeSlider.resources

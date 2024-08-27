@@ -67,4 +67,3 @@ G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\bin\Debu
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp.70CA75B0.Up2Date
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.genruntimeconfig.cache
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\ref\MusicApp_Forms.dll
-G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.CustomVolumeSlider.resources

@@ -152,6 +152,14 @@ namespace MusicApp_Forms
             }
         }
 
+        private void VolumeTrackbar_Scroll(object sender, EventArgs e)
+        {
+            if (_audioFileReader != null)
+            {
+                _audioFileReader.Volume = VolumeTrackbar.Value / 100f;
+            }
+        }
+
         private void CloseApp_pb_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -175,6 +183,34 @@ namespace MusicApp_Forms
         private void btnShowList_Click(object sender, EventArgs e)
         {
             _songList.Show();
+        }
+
+        private void btnShuffle_Click(object sender, EventArgs e)
+        {
+            ShuffleTracks();
+        }
+
+        private void btnRepeat_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRepeatOnce_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ShuffleTracks()
+        {
+            Random random = new Random();
+            List<string> tracks = _songList._lstSongs.Items.Cast<string>().ToList();
+            List<string> shuffledTracks = tracks.OrderBy(x => random.Next()).ToList();
+
+            _songList._lstSongs.Items.Clear();
+            foreach (string track in shuffledTracks)
+            {
+                _songList._lstSongs.Items.Add(track);
+            }
         }
     }
 }

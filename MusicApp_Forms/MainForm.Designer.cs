@@ -43,6 +43,9 @@
             timer1 = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
             panel3 = new Panel();
+            lblSongGenre = new Label();
+            lblSongAlbum = new Label();
+            lblSongArtist = new Label();
             volumeSlider = new NAudio.Gui.VolumeSlider();
             panel2 = new Panel();
             label1 = new Label();
@@ -51,6 +54,7 @@
             RestApp_pb = new PictureBox();
             CloseApp_pb = new PictureBox();
             panel4 = new Panel();
+            VolumeTrackbar = new TrackBar();
             panel5 = new Panel();
             panel6 = new Panel();
             panel1 = new Panel();
@@ -69,6 +73,7 @@
             ((System.ComponentModel.ISupportInitialize)RestApp_pb).BeginInit();
             ((System.ComponentModel.ISupportInitialize)CloseApp_pb).BeginInit();
             panel4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)VolumeTrackbar).BeginInit();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -105,11 +110,12 @@
             // lblCurrentSong
             // 
             lblCurrentSong.AutoSize = true;
-            lblCurrentSong.Location = new Point(340, 6);
+            lblCurrentSong.Font = new Font("Arial", 12.75F, FontStyle.Bold);
+            lblCurrentSong.Location = new Point(236, 34);
             lblCurrentSong.Name = "lblCurrentSong";
-            lblCurrentSong.Size = new Size(48, 15);
+            lblCurrentSong.Size = new Size(96, 19);
             lblCurrentSong.TabIndex = 8;
-            lblCurrentSong.Text = "Current";
+            lblCurrentSong.Text = "Track Title:";
             // 
             // btnOpen
             // 
@@ -127,7 +133,7 @@
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(151, 6);
+            lblStatus.Location = new Point(196, 9);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(45, 15);
             lblStatus.TabIndex = 7;
@@ -187,7 +193,7 @@
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(12, 22);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(171, 199);
+            pictureBox1.Size = new Size(202, 199);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
@@ -196,15 +202,49 @@
             // panel3
             // 
             panel3.BackColor = Color.LightCoral;
+            panel3.Controls.Add(lblSongGenre);
+            panel3.Controls.Add(lblSongAlbum);
+            panel3.Controls.Add(lblSongArtist);
+            panel3.Controls.Add(lblCurrentSong);
             panel3.Controls.Add(pictureBox1);
-            panel3.Location = new Point(151, 66);
+            panel3.Location = new Point(58, 66);
             panel3.Name = "panel3";
-            panel3.Size = new Size(204, 259);
+            panel3.Size = new Size(549, 259);
             panel3.TabIndex = 13;
+            // 
+            // lblSongGenre
+            // 
+            lblSongGenre.AutoSize = true;
+            lblSongGenre.Font = new Font("Arial", 12.75F, FontStyle.Bold);
+            lblSongGenre.Location = new Point(236, 133);
+            lblSongGenre.Name = "lblSongGenre";
+            lblSongGenre.Size = new Size(63, 19);
+            lblSongGenre.TabIndex = 12;
+            lblSongGenre.Text = "Genre:";
+            // 
+            // lblSongAlbum
+            // 
+            lblSongAlbum.AutoSize = true;
+            lblSongAlbum.Font = new Font("Arial", 12.75F, FontStyle.Bold);
+            lblSongAlbum.Location = new Point(236, 100);
+            lblSongAlbum.Name = "lblSongAlbum";
+            lblSongAlbum.Size = new Size(64, 19);
+            lblSongAlbum.TabIndex = 11;
+            lblSongAlbum.Text = "Album:";
+            // 
+            // lblSongArtist
+            // 
+            lblSongArtist.AutoSize = true;
+            lblSongArtist.Font = new Font("Arial", 12.75F, FontStyle.Bold);
+            lblSongArtist.Location = new Point(236, 68);
+            lblSongArtist.Name = "lblSongArtist";
+            lblSongArtist.Size = new Size(58, 19);
+            lblSongArtist.TabIndex = 10;
+            lblSongArtist.Text = "Artist:";
             // 
             // volumeSlider
             // 
-            volumeSlider.Location = new Point(513, 6);
+            volumeSlider.Location = new Point(304, 9);
             volumeSlider.Name = "volumeSlider";
             volumeSlider.Size = new Size(96, 16);
             volumeSlider.TabIndex = 10;
@@ -214,6 +254,7 @@
             // 
             panel2.BackColor = Color.Yellow;
             panel2.Controls.Add(label1);
+            panel2.Controls.Add(volumeSlider);
             panel2.Controls.Add(MinApp_pb);
             panel2.Controls.Add(MaxApp_pb);
             panel2.Controls.Add(RestApp_pb);
@@ -290,15 +331,26 @@
             // panel4
             // 
             panel4.BackColor = Color.Yellow;
-            panel4.Controls.Add(volumeSlider);
-            panel4.Controls.Add(lblCurrentSong);
+            panel4.Controls.Add(VolumeTrackbar);
             panel4.Controls.Add(lblElapsed);
             panel4.Controls.Add(lblStatus);
             panel4.Dock = DockStyle.Bottom;
-            panel4.Location = new Point(0, 470);
+            panel4.Location = new Point(0, 464);
             panel4.Name = "panel4";
-            panel4.Size = new Size(672, 30);
+            panel4.Size = new Size(672, 36);
             panel4.TabIndex = 15;
+            // 
+            // VolumeTrackbar
+            // 
+            VolumeTrackbar.AutoSize = false;
+            VolumeTrackbar.Location = new Point(469, 6);
+            VolumeTrackbar.Maximum = 100;
+            VolumeTrackbar.Name = "VolumeTrackbar";
+            VolumeTrackbar.Size = new Size(200, 22);
+            VolumeTrackbar.TabIndex = 10;
+            VolumeTrackbar.TickStyle = TickStyle.None;
+            VolumeTrackbar.Value = 50;
+            VolumeTrackbar.Scroll += VolumeTrackbar_Scroll;
             // 
             // panel5
             // 
@@ -306,7 +358,7 @@
             panel5.Dock = DockStyle.Right;
             panel5.Location = new Point(642, 35);
             panel5.Name = "panel5";
-            panel5.Size = new Size(30, 347);
+            panel5.Size = new Size(30, 341);
             panel5.TabIndex = 16;
             // 
             // panel6
@@ -315,7 +367,7 @@
             panel6.Dock = DockStyle.Left;
             panel6.Location = new Point(0, 35);
             panel6.Name = "panel6";
-            panel6.Size = new Size(30, 347);
+            panel6.Size = new Size(30, 341);
             panel6.TabIndex = 17;
             // 
             // panel1
@@ -336,7 +388,7 @@
             panel1.Controls.Add(btnPrevious);
             panel1.Controls.Add(btnPause);
             panel1.Dock = DockStyle.Bottom;
-            panel1.Location = new Point(0, 382);
+            panel1.Location = new Point(0, 376);
             panel1.Name = "panel1";
             panel1.Size = new Size(672, 88);
             panel1.TabIndex = 11;
@@ -362,6 +414,7 @@
             btnRepeatOnce.Size = new Size(40, 40);
             btnRepeatOnce.TabIndex = 12;
             btnRepeatOnce.UseVisualStyleBackColor = true;
+            btnRepeatOnce.Click += btnRepeatOnce_Click;
             // 
             // btnMenu
             // 
@@ -384,6 +437,7 @@
             btnShuffle.Size = new Size(40, 40);
             btnShuffle.TabIndex = 11;
             btnShuffle.UseVisualStyleBackColor = true;
+            btnShuffle.Click += btnShuffle_Click;
             // 
             // btnRepeat
             // 
@@ -395,6 +449,7 @@
             btnRepeat.Size = new Size(40, 40);
             btnRepeat.TabIndex = 10;
             btnRepeat.UseVisualStyleBackColor = true;
+            btnRepeat.Click += btnRepeat_Click;
             // 
             // btnAddtoList
             // 
@@ -439,6 +494,7 @@
             Text = "Music Player";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel3.ResumeLayout(false);
+            panel3.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)MinApp_pb).EndInit();
@@ -447,6 +503,7 @@
             ((System.ComponentModel.ISupportInitialize)CloseApp_pb).EndInit();
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)VolumeTrackbar).EndInit();
             panel1.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -483,5 +540,9 @@
         private Button btnRepeat;
         private Button btnSettings;
         private Button btnMenu;
+        private TrackBar VolumeTrackbar;
+        private Label lblSongArtist;
+        private Label lblSongGenre;
+        private Label lblSongAlbum;
     }
 }

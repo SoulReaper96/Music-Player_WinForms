@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZD4OLqf3ReI=",
+  "dgSpecHash": "f+WtsSuvRKI=",
   "success": true,
-  "projectFilePath": "G:\\Studies\\MusicApp_Forms\\MusicApp_Forms\\MusicApp_Forms.csproj",
+  "projectFilePath": "G:\\GitHub Repo Cloned\\SoulReaper96\\Music-Player_WinForms\\MusicApp_Forms\\MusicApp_Forms.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrator\\.nuget\\packages\\metroset_ui\\2.0.0\\metroset_ui.2.0.0.nupkg.sha512",
     "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",

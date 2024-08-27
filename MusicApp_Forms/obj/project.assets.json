@@ -522,11 +522,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "G:\\Studies\\MusicApp_Forms\\MusicApp_Forms\\MusicApp_Forms.csproj",
+      "projectUniqueName": "G:\\GitHub Repo Cloned\\SoulReaper96\\Music-Player_WinForms\\MusicApp_Forms\\MusicApp_Forms.csproj",
       "projectName": "MusicApp_Forms",
-      "projectPath": "G:\\Studies\\MusicApp_Forms\\MusicApp_Forms\\MusicApp_Forms.csproj",
+      "projectPath": "G:\\GitHub Repo Cloned\\SoulReaper96\\Music-Player_WinForms\\MusicApp_Forms\\MusicApp_Forms.csproj",
       "packagesPath": "C:\\Users\\Administrator\\.nuget\\packages\\",
-      "outputPath": "G:\\Studies\\MusicApp_Forms\\MusicApp_Forms\\obj\\",
+      "outputPath": "G:\\GitHub Repo Cloned\\SoulReaper96\\Music-Player_WinForms\\MusicApp_Forms\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

@@ -14,6 +14,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = MusicApp_Forms
-build_property.ProjectDir = G:\Studies\MusicApp_Forms\MusicApp_Forms\
+build_property.ProjectDir = G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 

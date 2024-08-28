@@ -12,7 +12,9 @@ namespace MusicApp_Forms
         private int _currentIndex = -1;
         private System.Windows.Forms.Timer _timer;
         private SongList _songList;
-        private bool _isSongRepeating = false;
+
+        private bool _isRepeatingSong = false;
+        private bool _isRepeatingPlaylist = false;
 
         public MusicPlayer()
         {
@@ -35,8 +37,9 @@ namespace MusicApp_Forms
 
         private void Timer1_Tick(object? sender, EventArgs e)
         {
-            if (_audioFileReader != null)
+            if (_audioFileReader != null && _audioFileReader.TotalTime.TotalSeconds > 0)
             {
+                pbarSong.Value = (int)((_audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds) * pbarSong.Maximum);
                 lblElapsed.Text = $"{_audioFileReader.CurrentTime.ToString(@"mm\:ss")} / {_audioFileReader.TotalTime.ToString(@"mm\:ss")}";
             }
         }
@@ -77,23 +80,10 @@ namespace MusicApp_Forms
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (_isSongRepeating)
-            {
-                _waveOutDevice?.Stop();
-                _timer.Stop();
-                _waveOutDevice = new WaveOutEvent();
-                _audioFileReader.Position = 0;
-                _waveOutDevice.Init(_audioFileReader);
-                _waveOutDevice.Play();
-                _timer.Start();
-                lblStatus.Text = "Status: Playing";
-            }
-            else
-            {
-                _timer.Stop();
-                lblStatus.Text = "Status: Stopped";
-                lblElapsed.Text = "00:00 / 00:00";
-            }
+            _waveOutDevice?.Stop();
+            _timer.Stop();
+            lblStatus.Text = "Status: Stopped";
+            lblElapsed.Text = "00:00 / 00:00";
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -103,6 +93,7 @@ namespace MusicApp_Forms
                 _currentIndex = (_currentIndex + 1) % _musicFiles.Count;
                 _songList._lstSongs.SelectedIndex = _currentIndex;
                 PlaySelectedFile();
+                lblStatus.Text = "Status: Playing Next";
             }
         }
 
@@ -113,51 +104,7 @@ namespace MusicApp_Forms
                 _currentIndex = (_currentIndex - 1 + _musicFiles.Count) % _musicFiles.Count;
                 _songList._lstSongs.SelectedIndex = _currentIndex;
                 PlaySelectedFile();
-            }
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PlaySelectedFile()
-        {
-            if (_currentIndex >= 0)
-            {
-                string _selectedFile = _musicFiles[_currentIndex];
-                if (_waveOutDevice != null)
-                {
-                    _waveOutDevice.Stop();
-                    _audioFileReader.Dispose();
-                }
-
-                _waveOutDevice = new WaveOutEvent();
-                _audioFileReader = new AudioFileReader(_selectedFile);
-
-                _waveOutDevice.Init(_audioFileReader);
-                _waveOutDevice.Volume = VolumeTrackbar.Value / 100f;
-                _waveOutDevice.Play();
-                lblStatus.Text = "Status: Playing";
-                lblCurrentSong.Text = System.IO.Path.GetFileName(_selectedFile);
-                _timer.Start();
-            }
-        }
-
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            _waveOutDevice?.Stop();
-            _audioFileReader?.Dispose();
-            _waveOutDevice?.Dispose();
-            base.OnFormClosing(e);
-            base.OnFormClosing(e);
-        }
-
-        private void VolumeTrackbar_Scroll(object sender, EventArgs e)
-        {
-            if (_audioFileReader != null)
-            {
-                _audioFileReader.Volume = VolumeTrackbar.Value / 100f;
+                lblStatus.Text = "Status: Playing Previous";
             }
         }
 
@@ -193,13 +140,115 @@ namespace MusicApp_Forms
 
         private void btnRepeat_Click(object sender, EventArgs e)
         {
-            _isSongRepeating = !_isSongRepeating;
-            lblStatus.Text = "Status: " + (_isSongRepeating ? "Repeat: On" : "Repeat: Off");
+            _isRepeatingSong = !_isRepeatingSong;
+            lblStatus.Text = "Status: " + (_isRepeatingSong ? "Repeat: On" : "Repeat: Off");
         }
 
         private void btnRepeatOnce_Click(object sender, EventArgs e)
         {
+            _isRepeatingPlaylist = !_isRepeatingPlaylist;
+            lblStatus.Text = "Status: " + (_isRepeatingPlaylist ? "Repeat Playlist: On" : "Repeat Playlist: Off");
+        }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PlaySelectedFile()
+        {
+            if (_currentIndex >= 0)
+            {
+                string _selectedFile = _musicFiles[_currentIndex];
+                if (_waveOutDevice != null)
+                {
+                    _waveOutDevice.Stop();
+                    _audioFileReader.Dispose();
+                }
+
+                _waveOutDevice = new WaveOutEvent();
+                _audioFileReader = new AudioFileReader(_selectedFile);
+
+                _waveOutDevice.Init(_audioFileReader);
+                _waveOutDevice.Volume = VolumeTrackbar.Value / 100f;
+                _waveOutDevice.Play();
+                lblStatus.Text = "Status: Playing";
+                lblCurrentSong.Text = System.IO.Path.GetFileName(_selectedFile);
+                _timer.Start();
+
+                _waveOutDevice.PlaybackStopped += OnPlaybackStopped;
+            }
+        }
+
+        private void PlayTrackByIndex(int Index)
+        {
+            if (Index < 0 || Index >= _musicFiles.Count)
+            {
+                return;
+            }
+
+            string _track = _musicFiles[Index];
+            if (_waveOutDevice != null)
+            {
+                _waveOutDevice?.Stop();
+                _waveOutDevice = new WaveOutEvent();
+                _audioFileReader = new AudioFileReader(_track);
+                _waveOutDevice.Init(_audioFileReader);
+                _waveOutDevice.Play();
+                lblStatus.Text = "Status: Playing";
+                _timer.Start();
+                lblCurrentSong.Text = System.IO.Path.GetFileName(_track);
+                _waveOutDevice.PlaybackStopped += OnPlaybackStopped;
+            }
+
+        }
+
+        private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
+        {
+            if (_isRepeatingSong)
+            {
+                _waveOutDevice?.Stop();
+                _timer.Stop();
+                _waveOutDevice = new WaveOutEvent();
+                _audioFileReader.Position = 0;
+                _waveOutDevice.Init(_audioFileReader);
+                _waveOutDevice.Play();
+                _timer.Start();
+                lblStatus.Text = "Status: Playing";
+            }
+            else if (_isRepeatingPlaylist)
+            {
+                _currentIndex++;
+                if (_currentIndex >= _musicFiles.Count)
+                {
+                    _currentIndex = 0;
+                }
+                PlayTrackByIndex(_currentIndex);
+            }
+            else
+            {
+                _waveOutDevice?.Stop();
+                _timer.Stop();
+                lblStatus.Text = "Status: Stopped";
+                lblElapsed.Text = "00:00 / 00:00";
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            _waveOutDevice?.Stop();
+            _audioFileReader?.Dispose();
+            _waveOutDevice?.Dispose();
+            base.OnFormClosing(e);
+            base.OnFormClosing(e);
+        }
+
+        private void VolumeTrackbar_Scroll(object sender, EventArgs e)
+        {
+            if (_audioFileReader != null)
+            {
+                _audioFileReader.Volume = VolumeTrackbar.Value / 100f;
+            }
         }
 
         private void ShuffleTracks()
@@ -226,6 +275,19 @@ namespace MusicApp_Forms
             {
                 _songList._lstSongs.Items.Add(track);
             }
+        }
+
+        private void pbarSong_MouseDown(object sender, MouseEventArgs e)
+        {
+
+            // Calculate the new position
+            int mouseX = e.X;
+            int progressBarWidth = pbarSong.Width;
+            double newPosition = (double)mouseX / progressBarWidth * _audioFileReader.TotalTime.TotalSeconds;
+
+            // Set the new position
+            _audioFileReader.CurrentTime = TimeSpan.FromSeconds(newPosition);
+            pbarSong.Value = (int)((_audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds) * pbarSong.Maximum);
         }
     }
 }

@@ -93,8 +93,9 @@
             pbarSong.ForeColor = Color.Green;
             pbarSong.Location = new Point(12, 66);
             pbarSong.Name = "pbarSong";
-            pbarSong.Size = new Size(555, 10);
+            pbarSong.Size = new Size(574, 15);
             pbarSong.TabIndex = 3;
+            pbarSong.MouseDown += pbarSong_MouseDown;
             // 
             // lblElapsed
             // 

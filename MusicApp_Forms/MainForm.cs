@@ -11,7 +11,6 @@ namespace MusicApp_Forms
         private List<string> _musicFiles;
         private int _currentIndex = -1;
         private System.Windows.Forms.Timer _timer;
-        private SongList _songList;
 
         private bool _isRepeatingSong = false;
         private bool _isRepeatingPlaylist = false;
@@ -25,13 +24,12 @@ namespace MusicApp_Forms
             _timer.Interval = 1000;
             _timer.Tick += Timer1_Tick;
 
-            _songList = new SongList();
-            _songList._lstSongs.SelectedIndexChanged += new EventHandler(_lstSongs_SelectedIndexChanged);
+            songList.SelectedIndexChanged += new EventHandler(_lstSongs_SelectedIndexChanged);
         }
 
         private void _lstSongs_SelectedIndexChanged(object? sender, EventArgs e)
         {
-            _currentIndex = _songList._lstSongs.SelectedIndex;
+            _currentIndex = songList.SelectedIndex;
             PlaySelectedFile();
         }
 
@@ -56,11 +54,12 @@ namespace MusicApp_Forms
                     foreach (string file in openFileDialog.FileNames)
                     {
                         _musicFiles.Add(file);
-                        _songList._lstSongs.Items.Add(System.IO.Path.GetFileName(file));
+                        //_songList._lstSongs.Items.Add(System.IO.Path.GetFileName(file));
+                        songList.Items.Add(System.IO.Path.GetFileName(file));
                     }
 
                     lblStatus.Text = "Status: Loaded " + openFileDialog.FileNames.Length + " file(s)";
-                    _songList.Show();
+                    //_songList.Show();
                 }
             }
         }
@@ -91,7 +90,7 @@ namespace MusicApp_Forms
             if (_musicFiles.Count > 0)
             {
                 _currentIndex = (_currentIndex + 1) % _musicFiles.Count;
-                _songList._lstSongs.SelectedIndex = _currentIndex;
+                songList.SelectedIndex = _currentIndex;
                 PlaySelectedFile();
                 lblStatus.Text = "Status: Playing Next";
             }
@@ -102,7 +101,7 @@ namespace MusicApp_Forms
             if (_musicFiles.Count > 0)
             {
                 _currentIndex = (_currentIndex - 1 + _musicFiles.Count) % _musicFiles.Count;
-                _songList._lstSongs.SelectedIndex = _currentIndex;
+                songList.SelectedIndex = _currentIndex;
                 PlaySelectedFile();
                 lblStatus.Text = "Status: Playing Previous";
             }
@@ -130,7 +129,7 @@ namespace MusicApp_Forms
 
         private void btnShowList_Click(object sender, EventArgs e)
         {
-            _songList.Show();
+            songList.Show();
         }
 
         private void btnShuffle_Click(object sender, EventArgs e)
@@ -254,7 +253,7 @@ namespace MusicApp_Forms
         private void ShuffleTracks()
         {
             Random random = new Random();
-            List<string> tracks = _songList._lstSongs.Items.Cast<string>().ToList();
+            List<string> tracks = songList.Items.Cast<string>().ToList();
             List<string> shuffledTracks = tracks.OrderBy(x => random.Next()).ToList();
 
             // Debugging: Print the original and shuffled lists
@@ -270,10 +269,10 @@ namespace MusicApp_Forms
                 Console.WriteLine(track);
             }
 
-            _songList._lstSongs.Items.Clear();
+            songList.Items.Clear();
             foreach (var track in shuffledTracks)
             {
-                _songList._lstSongs.Items.Add(track);
+                songList.Items.Add(track);
             }
         }
 

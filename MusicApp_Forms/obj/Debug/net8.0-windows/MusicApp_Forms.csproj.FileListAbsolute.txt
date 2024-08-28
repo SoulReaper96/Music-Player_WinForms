@@ -39,7 +39,6 @@ G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debu
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.MusicPlayer.resources
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.Properties.Resources.resources
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.Settings.resources
-G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.SongList.resources
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.csproj.GenerateResource.cache
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.GeneratedMSBuildEditorConfig.editorconfig
 G:\GitHub Repo Cloned\SoulReaper96\Music-Player_WinForms\MusicApp_Forms\obj\Debug\net8.0-windows\MusicApp_Forms.AssemblyInfoInputs.cache

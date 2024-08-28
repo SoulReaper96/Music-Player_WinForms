@@ -46,7 +46,6 @@
             lblSongGenre = new Label();
             lblSongAlbum = new Label();
             lblSongArtist = new Label();
-            volumeSlider = new NAudio.Gui.VolumeSlider();
             panel2 = new Panel();
             label1 = new Label();
             MinApp_pb = new PictureBox();
@@ -133,7 +132,7 @@
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(196, 9);
+            lblStatus.Location = new Point(169, 9);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(45, 15);
             lblStatus.TabIndex = 7;
@@ -242,19 +241,10 @@
             lblSongArtist.TabIndex = 10;
             lblSongArtist.Text = "Artist:";
             // 
-            // volumeSlider
-            // 
-            volumeSlider.Location = new Point(304, 9);
-            volumeSlider.Name = "volumeSlider";
-            volumeSlider.Size = new Size(96, 16);
-            volumeSlider.TabIndex = 10;
-            volumeSlider.VolumeChanged += volumeSlider_VolumeChanged;
-            // 
             // panel2
             // 
             panel2.BackColor = Color.Yellow;
             panel2.Controls.Add(label1);
-            panel2.Controls.Add(volumeSlider);
             panel2.Controls.Add(MinApp_pb);
             panel2.Controls.Add(MaxApp_pb);
             panel2.Controls.Add(RestApp_pb);
@@ -527,7 +517,6 @@
         private Panel panel5;
         private Panel panel6;
         private Panel panel1;
-        private NAudio.Gui.VolumeSlider volumeSlider;
         private PictureBox RestApp_pb;
         private PictureBox CloseApp_pb;
         private PictureBox MaxApp_pb;

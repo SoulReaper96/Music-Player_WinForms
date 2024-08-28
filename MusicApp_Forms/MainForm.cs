@@ -12,12 +12,12 @@ namespace MusicApp_Forms
         private int _currentIndex = -1;
         private System.Windows.Forms.Timer _timer;
         private SongList _songList;
+        private bool _isSongRepeating = false;
 
         public MusicPlayer()
         {
             InitializeComponent();
             _musicFiles = new List<string>();
-            volumeSlider.Volume = 0.5f;
 
             _timer = new System.Windows.Forms.Timer();
             _timer.Interval = 1000;
@@ -77,10 +77,23 @@ namespace MusicApp_Forms
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            _waveOutDevice?.Stop();
-            _timer.Stop();
-            lblStatus.Text = "Status: Stopped";
-            lblElapsed.Text = "00:00 / 00:00";
+            if (_isSongRepeating)
+            {
+                _waveOutDevice?.Stop();
+                _timer.Stop();
+                _waveOutDevice = new WaveOutEvent();
+                _audioFileReader.Position = 0;
+                _waveOutDevice.Init(_audioFileReader);
+                _waveOutDevice.Play();
+                _timer.Start();
+                lblStatus.Text = "Status: Playing";
+            }
+            else
+            {
+                _timer.Stop();
+                lblStatus.Text = "Status: Stopped";
+                lblElapsed.Text = "00:00 / 00:00";
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -123,9 +136,10 @@ namespace MusicApp_Forms
                 _audioFileReader = new AudioFileReader(_selectedFile);
 
                 _waveOutDevice.Init(_audioFileReader);
-                _waveOutDevice.Volume = volumeSlider.Volume;
+                _waveOutDevice.Volume = VolumeTrackbar.Value / 100f;
                 _waveOutDevice.Play();
-                lblStatus.Text = "Status: Playing " + System.IO.Path.GetFileName(_selectedFile);
+                lblStatus.Text = "Status: Playing";
+                lblCurrentSong.Text = System.IO.Path.GetFileName(_selectedFile);
                 _timer.Start();
             }
         }
@@ -139,34 +153,6 @@ namespace MusicApp_Forms
             base.OnFormClosing(e);
         }
 
-        private void volumeSlider_VolumeChanged(object sender, EventArgs e)
-        {
-            if (volumeSlider.Volume > 0.0f)
-            {
-                if (_waveOutDevice != null)
-                {
-                    _waveOutDevice.Volume = volumeSlider.Volume;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Volume cannot be set to zero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void volumeSlider_VolumeChanged(object sender, EventArgs e)
-        {
-            if (volumeSlider.Volume > 0.0f)
-            {
-                if (_waveOutDevice != null)
-                {
-                    _waveOutDevice.Volume = volumeSlider.Volume;
-                }
-            }
-            else
-            {
-                MessageBox.Show("Volume cannot be set to zero.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         private void VolumeTrackbar_Scroll(object sender, EventArgs e)
         {
             if (_audioFileReader != null)
@@ -207,7 +193,8 @@ namespace MusicApp_Forms
 
         private void btnRepeat_Click(object sender, EventArgs e)
         {
-
+            _isSongRepeating = !_isSongRepeating;
+            lblStatus.Text = "Status: " + (_isSongRepeating ? "Repeat: On" : "Repeat: Off");
         }
 
         private void btnRepeatOnce_Click(object sender, EventArgs e)
@@ -221,8 +208,21 @@ namespace MusicApp_Forms
             List<string> tracks = _songList._lstSongs.Items.Cast<string>().ToList();
             List<string> shuffledTracks = tracks.OrderBy(x => random.Next()).ToList();
 
+            // Debugging: Print the original and shuffled lists
+            Console.WriteLine("Original List:");
+            foreach (var track in tracks)
+            {
+                Console.WriteLine(track);
+            }
+
+            Console.WriteLine("Shuffled List:");
+            foreach (var track in shuffledTracks)
+            {
+                Console.WriteLine(track);
+            }
+
             _songList._lstSongs.Items.Clear();
-            foreach (string track in shuffledTracks)
+            foreach (var track in shuffledTracks)
             {
                 _songList._lstSongs.Items.Add(track);
             }

@@ -75,6 +75,8 @@
             btnPrevious.BackgroundImage = (Image)resources.GetObject("btnPrevious.BackgroundImage");
             btnPrevious.BackgroundImageLayout = ImageLayout.Stretch;
             btnPrevious.FlatStyle = FlatStyle.Flat;
+            btnPrevious.Location = new Point(126, 32);
+            btnPrevious.Location = new Point(156, 35);
             btnPrevious.Location = new Point(156, 35);
             btnPrevious.Name = "btnPrevious";
             btnPrevious.Size = new Size(40, 40);
@@ -117,6 +119,8 @@
             btnOpen.BackgroundImage = (Image)resources.GetObject("btnOpen.BackgroundImage");
             btnOpen.BackgroundImageLayout = ImageLayout.Stretch;
             btnOpen.FlatStyle = FlatStyle.Flat;
+            btnOpen.Location = new Point(631, 32);
+            btnOpen.Location = new Point(600, 35);
             btnOpen.Location = new Point(600, 35);
             btnOpen.Name = "btnOpen";
             btnOpen.Size = new Size(60, 47);
@@ -138,6 +142,8 @@
             btnNext.BackgroundImage = (Image)resources.GetObject("btnNext.BackgroundImage");
             btnNext.BackgroundImageLayout = ImageLayout.Stretch;
             btnNext.FlatStyle = FlatStyle.Flat;
+            btnNext.Location = new Point(218, 32);
+            btnNext.Location = new Point(340, 35);
             btnNext.Location = new Point(340, 35);
             btnNext.Name = "btnNext";
             btnNext.Size = new Size(40, 40);
@@ -150,6 +156,8 @@
             btnStop.BackgroundImage = (Image)resources.GetObject("btnStop.BackgroundImage");
             btnStop.BackgroundImageLayout = ImageLayout.Stretch;
             btnStop.FlatStyle = FlatStyle.Flat;
+            btnStop.Location = new Point(172, 32);
+            btnStop.Location = new Point(294, 35);
             btnStop.Location = new Point(294, 35);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(40, 40);
@@ -162,6 +170,8 @@
             btnPause.BackgroundImage = (Image)resources.GetObject("btnPause.BackgroundImage");
             btnPause.BackgroundImageLayout = ImageLayout.Stretch;
             btnPause.FlatStyle = FlatStyle.Flat;
+            btnPause.Location = new Point(58, 32);
+            btnPause.Location = new Point(248, 35);
             btnPause.Location = new Point(248, 35);
             btnPause.Name = "btnPause";
             btnPause.Size = new Size(40, 40);
@@ -174,6 +184,8 @@
             btnPlay.BackgroundImage = (Image)resources.GetObject("btnPlay.BackgroundImage");
             btnPlay.BackgroundImageLayout = ImageLayout.Stretch;
             btnPlay.FlatStyle = FlatStyle.Flat;
+            btnPlay.Location = new Point(12, 32);
+            btnPlay.Location = new Point(202, 35);
             btnPlay.Location = new Point(202, 35);
             btnPlay.Name = "btnPlay";
             btnPlay.Size = new Size(40, 40);

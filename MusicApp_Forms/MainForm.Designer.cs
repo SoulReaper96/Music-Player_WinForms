@@ -73,6 +73,7 @@
             btnPrevious.BackgroundImageLayout = ImageLayout.Stretch;
             btnPrevious.FlatStyle = FlatStyle.Flat;
             btnPrevious.Location = new Point(126, 32);
+            btnPrevious.Location = new Point(156, 35);
             btnPrevious.Name = "btnPrevious";
             btnPrevious.Size = new Size(40, 40);
             btnPrevious.TabIndex = 2;
@@ -115,6 +116,7 @@
             btnOpen.BackgroundImageLayout = ImageLayout.Stretch;
             btnOpen.FlatStyle = FlatStyle.Flat;
             btnOpen.Location = new Point(631, 32);
+            btnOpen.Location = new Point(600, 35);
             btnOpen.Name = "btnOpen";
             btnOpen.Size = new Size(60, 47);
             btnOpen.TabIndex = 7;
@@ -136,6 +138,7 @@
             btnNext.BackgroundImageLayout = ImageLayout.Stretch;
             btnNext.FlatStyle = FlatStyle.Flat;
             btnNext.Location = new Point(218, 32);
+            btnNext.Location = new Point(340, 35);
             btnNext.Name = "btnNext";
             btnNext.Size = new Size(40, 40);
             btnNext.TabIndex = 6;
@@ -148,6 +151,7 @@
             btnStop.BackgroundImageLayout = ImageLayout.Stretch;
             btnStop.FlatStyle = FlatStyle.Flat;
             btnStop.Location = new Point(172, 32);
+            btnStop.Location = new Point(294, 35);
             btnStop.Name = "btnStop";
             btnStop.Size = new Size(40, 40);
             btnStop.TabIndex = 5;
@@ -160,6 +164,7 @@
             btnPause.BackgroundImageLayout = ImageLayout.Stretch;
             btnPause.FlatStyle = FlatStyle.Flat;
             btnPause.Location = new Point(58, 32);
+            btnPause.Location = new Point(248, 35);
             btnPause.Name = "btnPause";
             btnPause.Size = new Size(40, 40);
             btnPause.TabIndex = 4;
@@ -172,6 +177,7 @@
             btnPlay.BackgroundImageLayout = ImageLayout.Stretch;
             btnPlay.FlatStyle = FlatStyle.Flat;
             btnPlay.Location = new Point(12, 32);
+            btnPlay.Location = new Point(202, 35);
             btnPlay.Name = "btnPlay";
             btnPlay.Size = new Size(40, 40);
             btnPlay.TabIndex = 3;
@@ -277,6 +283,7 @@
             btnSettings.BackgroundImageLayout = ImageLayout.Stretch;
             btnSettings.FlatStyle = FlatStyle.Flat;
             btnSettings.Location = new Point(447, 32);
+            btnSettings.Location = new Point(546, 35);
             btnSettings.Name = "btnSettings";
             btnSettings.Size = new Size(40, 40);
             btnSettings.TabIndex = 14;
@@ -288,6 +295,7 @@
             btnRepeatOnce.BackgroundImageLayout = ImageLayout.Stretch;
             btnRepeatOnce.FlatStyle = FlatStyle.Flat;
             btnRepeatOnce.Location = new Point(585, 32);
+            btnRepeatOnce.Location = new Point(104, 35);
             btnRepeatOnce.Name = "btnRepeatOnce";
             btnRepeatOnce.Size = new Size(40, 40);
             btnRepeatOnce.TabIndex = 12;
@@ -300,6 +308,7 @@
             btnMenu.BackgroundImageLayout = ImageLayout.Stretch;
             btnMenu.FlatStyle = FlatStyle.Flat;
             btnMenu.Location = new Point(401, 32);
+            btnMenu.Location = new Point(500, 35);
             btnMenu.Name = "btnMenu";
             btnMenu.Size = new Size(40, 40);
             btnMenu.TabIndex = 13;
@@ -311,6 +320,7 @@
             btnShuffle.BackgroundImageLayout = ImageLayout.Stretch;
             btnShuffle.FlatStyle = FlatStyle.Flat;
             btnShuffle.Location = new Point(493, 32);
+            btnShuffle.Location = new Point(12, 35);
             btnShuffle.Name = "btnShuffle";
             btnShuffle.Size = new Size(40, 40);
             btnShuffle.TabIndex = 11;
@@ -323,6 +333,7 @@
             btnRepeat.BackgroundImageLayout = ImageLayout.Stretch;
             btnRepeat.FlatStyle = FlatStyle.Flat;
             btnRepeat.Location = new Point(539, 32);
+            btnRepeat.Location = new Point(58, 35);
             btnRepeat.Name = "btnRepeat";
             btnRepeat.Size = new Size(40, 40);
             btnRepeat.TabIndex = 10;
@@ -335,6 +346,7 @@
             btnAddtoList.BackgroundImageLayout = ImageLayout.Stretch;
             btnAddtoList.FlatStyle = FlatStyle.Flat;
             btnAddtoList.Location = new Point(355, 32);
+            btnAddtoList.Location = new Point(432, 35);
             btnAddtoList.Name = "btnAddtoList";
             btnAddtoList.Size = new Size(40, 40);
             btnAddtoList.TabIndex = 9;
@@ -346,6 +358,7 @@
             btnShowList.BackgroundImageLayout = ImageLayout.Stretch;
             btnShowList.FlatStyle = FlatStyle.Flat;
             btnShowList.Location = new Point(309, 32);
+            btnShowList.Location = new Point(386, 35);
             btnShowList.Name = "btnShowList";
             btnShowList.Size = new Size(40, 40);
             btnShowList.TabIndex = 8;

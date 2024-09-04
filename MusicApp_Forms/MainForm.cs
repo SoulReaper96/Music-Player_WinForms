@@ -30,7 +30,7 @@ namespace MusicApp_Forms
         private void _lstSongs_SelectedIndexChanged(object? sender, EventArgs e)
         {
             _currentIndex = songList.SelectedIndex;
-            PlaySelectedFile();
+            //PlaySelectedFile();
         }
 
         private void Timer1_Tick(object? sender, EventArgs e)

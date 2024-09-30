@@ -429,7 +429,6 @@
             // 
             // songList_dgv
             // 
-            songList_dgv.AllowUserToAddRows = false;
             songList_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             songList_dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             songList_dgv.BackgroundColor = Color.WhiteSmoke;

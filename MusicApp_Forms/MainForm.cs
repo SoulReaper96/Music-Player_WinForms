@@ -8,7 +8,6 @@ namespace MusicApp_Forms
     {
         private IWavePlayer _waveOutDevice;
         private AudioFileReader _audioFileReader;
-        private VolumeSlider _volumeSlider;
         private List<string> _musicFiles;
         private int _currentIndex = -1;
         private System.Windows.Forms.Timer _timer;
@@ -42,14 +41,21 @@ namespace MusicApp_Forms
 
         private void MusicForm_DragDrop(object? sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
+            try
             {
-                if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav")
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                foreach (string file in files)
                 {
-                    string fileName = Path.GetFileName(file);
-                    songList_dgv.Rows.Add(fileName, file); // Add to DataGridView
+                    if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav" || Path.GetExtension(file) == ".m4a")
+                    {
+                        string fileName = Path.GetFileName(file);
+                        songList_dgv.Rows.Add(fileName, file); // Add to DataGridView
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error processing dropped files: {ex.Message}");
             }
         }
 
@@ -79,13 +85,10 @@ namespace MusicApp_Forms
                     foreach (string file in openFileDialog.FileNames)
                     {
                         _musicFiles.Add(file);
-                        //_songList._lstSongs.Items.Add(System.IO.Path.GetFileName(file));
-                        //songList.Items.Add(System.IO.Path.GetFileName(file));
                         songList_dgv.Rows.Add(System.IO.Path.GetFileName(file));
                     }
 
                     lblStatus.Text = "Status: Loaded " + openFileDialog.FileNames.Length + " file(s)";
-                    //_songList.Show();
                 }
             }
         }
@@ -116,7 +119,6 @@ namespace MusicApp_Forms
             if (_musicFiles.Count > 0 && _currentIndex < songList_dgv.Rows.Count - 1)
             {
                 _currentIndex++;
-                //_currentIndex = (_currentIndex + 1) % _musicFiles.Count;
                 PlaySelectedFile();
                 lblStatus.Text = "Status: Playing Next";
             }
@@ -127,30 +129,9 @@ namespace MusicApp_Forms
             if (_musicFiles.Count > 0 && _currentIndex > 0)
             {
                 _currentIndex--;
-                //_currentIndex = (_currentIndex + 1) % _musicFiles.Count;
                 PlaySelectedFile();
                 lblStatus.Text = "Status: Playing Previous";
             }
-        }
-
-        private void CloseApp_pb_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void MaxApp_pb_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Maximized;
-        }
-
-        private void RestApp_pb_Click(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Normal;
-        }
-
-        private void MinApp_pb_Click_1(object sender, EventArgs e)
-        {
-            this.WindowState = FormWindowState.Minimized;
         }
 
         private void btnShuffle_Click(object sender, EventArgs e)
@@ -172,26 +153,52 @@ namespace MusicApp_Forms
 
         private void PlaySelectedFile()
         {
-            if (_currentIndex >= 0)
+            if (_currentIndex >= 0 && _currentIndex < songList_dgv.Rows.Count)
             {
-                string _selectedFile = _musicFiles[_currentIndex];
-                if (_waveOutDevice != null)
+                try
                 {
-                    _waveOutDevice.Stop();
-                    _audioFileReader.Dispose();
+                    var cellValue = songList_dgv.Rows[_currentIndex].Cells[1].Value;
+                    if (cellValue != null)
+                    {
+                        string songPath = cellValue.ToString();
+                        PlaySong(songPath); // Play the song
+                        songList_dgv.ClearSelection();
+                        songList_dgv.Rows[_currentIndex].Selected = true; // Highlight the current song
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selected song path is empty.");
+                    }
                 }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error playing selected file: {ex.Message}");
+                }
+            }
+        }
+
+        private void PlaySong(string filePath)
+        {
+            try
+            {
+                _waveOutDevice?.Stop();
+                _audioFileReader?.Dispose();
 
                 _waveOutDevice = new WaveOutEvent();
-                _audioFileReader = new AudioFileReader(_selectedFile);
+                _audioFileReader = new AudioFileReader(filePath);
 
                 _waveOutDevice.Init(_audioFileReader);
                 _waveOutDevice.Volume = VolumeTrackbar.Value / 100f;
                 _waveOutDevice.Play();
                 lblStatus.Text = "Status: Playing";
-                lblCurrentSong.Text = System.IO.Path.GetFileName(_selectedFile);
+                lblCurrentSong.Text = System.IO.Path.GetFileName(filePath);
                 _timer.Start();
 
                 _waveOutDevice.PlaybackStopped += OnPlaybackStopped;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error playing song: {ex.Message}");
             }
         }
 
@@ -203,49 +210,48 @@ namespace MusicApp_Forms
             }
 
             string _track = _musicFiles[Index];
-            if (_waveOutDevice != null)
-            {
-                _waveOutDevice?.Stop();
-                _waveOutDevice = new WaveOutEvent();
-                _audioFileReader = new AudioFileReader(_track);
-                _waveOutDevice.Init(_audioFileReader);
-                _waveOutDevice.Play();
-                lblStatus.Text = "Status: Playing";
-                _timer.Start();
-                lblCurrentSong.Text = System.IO.Path.GetFileName(_track);
-                _waveOutDevice.PlaybackStopped += OnPlaybackStopped;
-            }
-
+            PlaySong(_track);
         }
 
         private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
         {
-            if (_isRepeatingSong)
+            try
             {
-                _waveOutDevice?.Stop();
-                _timer.Stop();
-                _waveOutDevice = new WaveOutEvent();
-                _audioFileReader.Position = 0;
-                _waveOutDevice.Init(_audioFileReader);
-                _waveOutDevice.Play();
-                _timer.Start();
-                lblStatus.Text = "Status: Playing";
-            }
-            else if (_isRepeatingPlaylist)
-            {
-                _currentIndex++;
-                if (_currentIndex >= _musicFiles.Count)
+                if (_isRepeatingSong)
                 {
-                    _currentIndex = 0;
+                    _waveOutDevice?.Stop();
+                    _timer.Stop();
+                    _waveOutDevice = new WaveOutEvent();
+                    _audioFileReader.Position = 0;
+                    _waveOutDevice.Init(_audioFileReader);
+                    _waveOutDevice.Play();
+                    _timer.Start();
+                    lblStatus.Text = "Status: Playing";
                 }
-                PlayTrackByIndex(_currentIndex);
+                else if (_isRepeatingPlaylist)
+                {
+                    _currentIndex++;
+                    if (_currentIndex >= _musicFiles.Count)
+                    {
+                        _currentIndex = 0;
+                    }
+                    PlayTrackByIndex(_currentIndex);
+                }
+                else if (_audioFileReader.Position == _audioFileReader.Length)
+                {
+                    btnNext_Click(null, null); // Auto-play the next track
+                }
+                else
+                {
+                    _waveOutDevice?.Stop();
+                    _timer.Stop();
+                    lblStatus.Text = "Status: Stopped";
+                    lblElapsed.Text = "00:00 / 00:00";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                _waveOutDevice?.Stop();
-                _timer.Stop();
-                lblStatus.Text = "Status: Stopped";
-                lblElapsed.Text = "00:00 / 00:00";
+                MessageBox.Show($"Error during playback stopped handling: {ex.Message}");
             }
         }
 
@@ -254,7 +260,6 @@ namespace MusicApp_Forms
             _waveOutDevice?.Stop();
             _audioFileReader?.Dispose();
             _waveOutDevice?.Dispose();
-            base.OnFormClosing(e);
             base.OnFormClosing(e);
         }
 
@@ -279,34 +284,63 @@ namespace MusicApp_Forms
 
         private void pbarSong_MouseDown(object sender, MouseEventArgs e)
         {
+            try
+            {
+                if (_audioFileReader != null)
+                {
+                    int mouseX = e.X;
+                    int progressBarWidth = pbarSong.Width;
+                    double newPosition = (double)mouseX / progressBarWidth * _audioFileReader.TotalTime.TotalSeconds;
 
-            // Calculate the new position
-            int mouseX = e.X;
-            int progressBarWidth = pbarSong.Width;
-            double newPosition = (double)mouseX / progressBarWidth * _audioFileReader.TotalTime.TotalSeconds;
-
-            // Set the new position
-            _audioFileReader.CurrentTime = TimeSpan.FromSeconds(newPosition);
-            pbarSong.Value = (int)((_audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds) * pbarSong.Maximum);
+                    _audioFileReader.CurrentTime = TimeSpan.FromSeconds(newPosition);
+                    pbarSong.Value = (int)((_audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds) * pbarSong.Maximum);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error seeking through the song: {ex.Message}");
+            }
         }
 
         private void songList_dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.RowIndex >= 0)
             {
-                string songPath = songList_dgv.Rows[e.RowIndex].Cells[1].Value.ToString();
-                PlaySelectedFile();
+                try
+                {
+                    var cellValue = songList_dgv.Rows[e.RowIndex].Cells[0].Value;
+                    if (cellValue != null)
+                    {
+                        string songPath = cellValue.ToString();
+                        PlaySong(songPath);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Selected song path is empty.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error occurred: {ex.Message}");
+                }
             }
         }
 
         private void btnRemove_Click(object sender, EventArgs e)
         {
-            if (songList_dgv.SelectedRows.Count > 0)
+            try
             {
-                foreach (DataGridViewRow row in songList_dgv.SelectedRows)
+                if (songList_dgv.SelectedRows.Count > 0)
                 {
-                    songList_dgv.Rows.Remove(row);
+                    foreach (DataGridViewRow row in songList_dgv.SelectedRows)
+                    {
+                        songList_dgv.Rows.Remove(row);
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error removing selected song(s): {ex.Message}");
             }
         }
     }

@@ -264,6 +264,17 @@
         DleppgAAAABJRU5ErkJggg==
 </value>
   </data>
+  <data name="btnRemove.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAASJJREFUSEvl
+        lEsyQ1EURV9LxyAwCNFQBuAzBzEIDIHCHDAHMgE9zMHfDLTZa786ValT4twIHVbVauzUPufmfZLuX7Ah
+        n+V78kmuy5lhUV4ePsqZiWWZSZ9PzY8ecCVj8LuyYyK/fgDcS4qLTm0sSWbunApuJOWBUxsrkplrp4JL
+        SXnTqYfLHr/0nLckMxdOBWeS8tCph4xBzjuSfOpUcCwp7zn15IU570vykVMBiylzUJAX5nwiybtOBdwa
+        ytyqIC/M+VySt50KeLiUedhBXpjzSJL5Yyzh9aTM6xrkhTnfSvKyUwE/MMr84ILqNX2QzCw4FcxLym9O
+        bdBlhtkmXiUDq05fsybpvjg1cigZmsYD2cyc5BC+1WfLxqXDcmb+HF33Aa7Xnw2QlfaUAAAAAElFTkSu
+        QmCC
+</value>
+  </data>
   <data name="btnSettings.BackgroundImage" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAAHgAAAB4CAYAAAA5ZDbSAAAABGdBTUEAALGPC/xhBQAAA6BJREFUeF7t
@@ -439,4 +450,28 @@
         AAAAAElFTkSuQmCC
 </value>
   </data>
+  <metadata name="TrackTitle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackArtist.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackAlbum.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackGenre.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackTitle.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackArtist.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackAlbum.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="TrackGenre.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
 </root>

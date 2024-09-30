@@ -1,5 +1,6 @@
 using NAudio.Wave;
 using NAudio.Gui;
+using System.Windows.Forms;
 
 namespace MusicApp_Forms
 {
@@ -18,19 +19,43 @@ namespace MusicApp_Forms
         public MusicPlayer()
         {
             InitializeComponent();
+            InitializeFormOptions();
             _musicFiles = new List<string>();
 
             _timer = new System.Windows.Forms.Timer();
             _timer.Interval = 1000;
             _timer.Tick += Timer1_Tick;
-
-            songList.SelectedIndexChanged += new EventHandler(_lstSongs_SelectedIndexChanged);
         }
 
-        private void _lstSongs_SelectedIndexChanged(object? sender, EventArgs e)
+        private void InitializeFormOptions()
         {
-            _currentIndex = songList.SelectedIndex;
-            //PlaySelectedFile();
+            this.AllowDrop = true;
+            this.DragEnter += new DragEventHandler(MusicForm_DragEnter);
+            this.DragDrop += new DragEventHandler(MusicForm_DragDrop);
+        }
+
+        private void MusicForm_DragEnter(object? sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.Copy;
+        }
+
+        private void MusicForm_DragDrop(object? sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav")
+                {
+                    string fileName = Path.GetFileName(file);
+                    songList_dgv.Rows.Add(fileName, file); // Add to DataGridView
+                }
+            }
+        }
+
+        private void songList_dgv_SelectionChanged(object sender, EventArgs e)
+        {
+            _currentIndex = songList_dgv.SelectedRows.Count;
         }
 
         private void Timer1_Tick(object? sender, EventArgs e)
@@ -55,7 +80,8 @@ namespace MusicApp_Forms
                     {
                         _musicFiles.Add(file);
                         //_songList._lstSongs.Items.Add(System.IO.Path.GetFileName(file));
-                        songList.Items.Add(System.IO.Path.GetFileName(file));
+                        //songList.Items.Add(System.IO.Path.GetFileName(file));
+                        songList_dgv.Rows.Add(System.IO.Path.GetFileName(file));
                     }
 
                     lblStatus.Text = "Status: Loaded " + openFileDialog.FileNames.Length + " file(s)";
@@ -87,10 +113,10 @@ namespace MusicApp_Forms
 
         private void btnNext_Click(object sender, EventArgs e)
         {
-            if (_musicFiles.Count > 0)
+            if (_musicFiles.Count > 0 && _currentIndex < songList_dgv.Rows.Count - 1)
             {
-                _currentIndex = (_currentIndex + 1) % _musicFiles.Count;
-                songList.SelectedIndex = _currentIndex;
+                _currentIndex++;
+                //_currentIndex = (_currentIndex + 1) % _musicFiles.Count;
                 PlaySelectedFile();
                 lblStatus.Text = "Status: Playing Next";
             }
@@ -98,10 +124,10 @@ namespace MusicApp_Forms
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            if (_musicFiles.Count > 0)
+            if (_musicFiles.Count > 0 && _currentIndex > 0)
             {
-                _currentIndex = (_currentIndex - 1 + _musicFiles.Count) % _musicFiles.Count;
-                songList.SelectedIndex = _currentIndex;
+                _currentIndex--;
+                //_currentIndex = (_currentIndex + 1) % _musicFiles.Count;
                 PlaySelectedFile();
                 lblStatus.Text = "Status: Playing Previous";
             }
@@ -127,11 +153,6 @@ namespace MusicApp_Forms
             this.WindowState = FormWindowState.Minimized;
         }
 
-        private void btnShowList_Click(object sender, EventArgs e)
-        {
-            songList.Show();
-        }
-
         private void btnShuffle_Click(object sender, EventArgs e)
         {
             ShuffleTracks();
@@ -147,11 +168,6 @@ namespace MusicApp_Forms
         {
             _isRepeatingPlaylist = !_isRepeatingPlaylist;
             lblStatus.Text = "Status: " + (_isRepeatingPlaylist ? "Repeat Playlist: On" : "Repeat Playlist: Off");
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void PlaySelectedFile()
@@ -253,26 +269,11 @@ namespace MusicApp_Forms
         private void ShuffleTracks()
         {
             Random random = new Random();
-            List<string> tracks = songList.Items.Cast<string>().ToList();
-            List<string> shuffledTracks = tracks.OrderBy(x => random.Next()).ToList();
 
-            // Debugging: Print the original and shuffled lists
-            Console.WriteLine("Original List:");
-            foreach (var track in tracks)
+            if (songList_dgv.Rows.Count > 0)
             {
-                Console.WriteLine(track);
-            }
-
-            Console.WriteLine("Shuffled List:");
-            foreach (var track in shuffledTracks)
-            {
-                Console.WriteLine(track);
-            }
-
-            songList.Items.Clear();
-            foreach (var track in shuffledTracks)
-            {
-                songList.Items.Add(track);
+                _currentIndex = random.Next(songList_dgv.Rows.Count);
+                PlaySelectedFile();
             }
         }
 
@@ -287,6 +288,26 @@ namespace MusicApp_Forms
             // Set the new position
             _audioFileReader.CurrentTime = TimeSpan.FromSeconds(newPosition);
             pbarSong.Value = (int)((_audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds) * pbarSong.Maximum);
+        }
+
+        private void songList_dgv_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                string songPath = songList_dgv.Rows[e.RowIndex].Cells[1].Value.ToString();
+                PlaySelectedFile();
+            }
+        }
+
+        private void btnRemove_Click(object sender, EventArgs e)
+        {
+            if (songList_dgv.SelectedRows.Count > 0)
+            {
+                foreach (DataGridViewRow row in songList_dgv.SelectedRows)
+                {
+                    songList_dgv.Rows.Remove(row);
+                }
+            }
         }
     }
 }

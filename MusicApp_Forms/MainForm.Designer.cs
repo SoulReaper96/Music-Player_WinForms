@@ -42,12 +42,12 @@
             btnPlay = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
-            panel3 = new Panel();
             lblSongGenre = new Label();
             lblSongAlbum = new Label();
             lblSongArtist = new Label();
             VolumeTrackbar = new TrackBar();
             panel1 = new Panel();
+            btnRemove = new Button();
             btnSettings = new Button();
             btnRepeatOnce = new Button();
             btnMenu = new Button();
@@ -62,12 +62,17 @@
             toolStripDropDownButton5 = new ToolStripDropDownButton();
             toolStripDropDownButton2 = new ToolStripDropDownButton();
             panel2 = new Panel();
-            songList = new ListBox();
+            songList_dgv = new DataGridView();
+            TrackTitle = new DataGridViewTextBoxColumn();
+            TrackArtist = new DataGridViewTextBoxColumn();
+            TrackAlbum = new DataGridViewTextBoxColumn();
+            TrackGenre = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackbar).BeginInit();
             panel1.SuspendLayout();
             toolStrip1.SuspendLayout();
+            panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)songList_dgv).BeginInit();
             SuspendLayout();
             // 
             // btnPrevious
@@ -105,7 +110,7 @@
             // 
             lblCurrentSong.AutoSize = true;
             lblCurrentSong.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblCurrentSong.Location = new Point(236, 34);
+            lblCurrentSong.Location = new Point(34, 152);
             lblCurrentSong.Name = "lblCurrentSong";
             lblCurrentSong.Size = new Size(96, 19);
             lblCurrentSong.TabIndex = 8;
@@ -185,32 +190,18 @@
             // 
             pictureBox1.BackColor = Color.Black;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(12, 22);
+            pictureBox1.Location = new Point(3, 3);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(202, 199);
+            pictureBox1.Size = new Size(139, 126);
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
-            pictureBox1.Click += pictureBox1_Click;
-            // 
-            // panel3
-            // 
-            panel3.BackColor = Color.LightCoral;
-            panel3.Controls.Add(lblSongGenre);
-            panel3.Controls.Add(lblSongAlbum);
-            panel3.Controls.Add(lblSongArtist);
-            panel3.Controls.Add(lblCurrentSong);
-            panel3.Controls.Add(pictureBox1);
-            panel3.Location = new Point(340, 152);
-            panel3.Name = "panel3";
-            panel3.Size = new Size(549, 259);
-            panel3.TabIndex = 13;
             // 
             // lblSongGenre
             // 
             lblSongGenre.AutoSize = true;
             lblSongGenre.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblSongGenre.Location = new Point(236, 133);
+            lblSongGenre.Location = new Point(35, 209);
             lblSongGenre.Name = "lblSongGenre";
             lblSongGenre.Size = new Size(63, 19);
             lblSongGenre.TabIndex = 12;
@@ -220,7 +211,7 @@
             // 
             lblSongAlbum.AutoSize = true;
             lblSongAlbum.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblSongAlbum.Location = new Point(236, 100);
+            lblSongAlbum.Location = new Point(34, 190);
             lblSongAlbum.Name = "lblSongAlbum";
             lblSongAlbum.Size = new Size(64, 19);
             lblSongAlbum.TabIndex = 11;
@@ -230,7 +221,7 @@
             // 
             lblSongArtist.AutoSize = true;
             lblSongArtist.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblSongArtist.Location = new Point(236, 68);
+            lblSongArtist.Location = new Point(34, 171);
             lblSongArtist.Name = "lblSongArtist";
             lblSongArtist.Size = new Size(58, 19);
             lblSongArtist.TabIndex = 10;
@@ -251,6 +242,7 @@
             // panel1
             // 
             panel1.BackColor = Color.Yellow;
+            panel1.Controls.Add(btnRemove);
             panel1.Controls.Add(pbarSong);
             panel1.Controls.Add(lblElapsed);
             panel1.Controls.Add(lblStatus);
@@ -273,6 +265,18 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1145, 88);
             panel1.TabIndex = 11;
+            // 
+            // btnRemove
+            // 
+            btnRemove.BackgroundImage = (Image)resources.GetObject("btnRemove.BackgroundImage");
+            btnRemove.BackgroundImageLayout = ImageLayout.Stretch;
+            btnRemove.FlatStyle = FlatStyle.Flat;
+            btnRemove.Location = new Point(720, 32);
+            btnRemove.Name = "btnRemove";
+            btnRemove.Size = new Size(40, 40);
+            btnRemove.TabIndex = 15;
+            btnRemove.UseVisualStyleBackColor = true;
+            btnRemove.Click += btnRemove_Click;
             // 
             // btnSettings
             // 
@@ -353,7 +357,6 @@
             btnShowList.Size = new Size(40, 40);
             btnShowList.TabIndex = 8;
             btnShowList.UseVisualStyleBackColor = true;
-            btnShowList.Click += btnShowList_Click;
             // 
             // toolStrip1
             // 
@@ -413,21 +416,58 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(pictureBox1);
+            panel2.Controls.Add(lblSongGenre);
+            panel2.Controls.Add(lblCurrentSong);
+            panel2.Controls.Add(lblSongAlbum);
+            panel2.Controls.Add(lblSongArtist);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 25);
             panel2.Name = "panel2";
-            panel2.Size = new Size(160, 536);
+            panel2.Size = new Size(178, 536);
             panel2.TabIndex = 15;
             // 
-            // songList
+            // songList_dgv
             // 
-            songList.Dock = DockStyle.Fill;
-            songList.FormattingEnabled = true;
-            songList.ItemHeight = 15;
-            songList.Location = new Point(160, 25);
-            songList.Name = "songList";
-            songList.Size = new Size(985, 536);
-            songList.TabIndex = 13;
+            songList_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            songList_dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            songList_dgv.BackgroundColor = Color.WhiteSmoke;
+            songList_dgv.BorderStyle = BorderStyle.None;
+            songList_dgv.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            songList_dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            songList_dgv.Columns.AddRange(new DataGridViewColumn[] { TrackTitle, TrackArtist, TrackAlbum, TrackGenre });
+            songList_dgv.Dock = DockStyle.Fill;
+            songList_dgv.EditMode = DataGridViewEditMode.EditProgrammatically;
+            songList_dgv.EnableHeadersVisualStyles = false;
+            songList_dgv.GridColor = Color.WhiteSmoke;
+            songList_dgv.Location = new Point(178, 25);
+            songList_dgv.Name = "songList_dgv";
+            songList_dgv.RowHeadersBorderStyle = DataGridViewHeaderBorderStyle.Single;
+            songList_dgv.RowHeadersVisible = false;
+            songList_dgv.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            songList_dgv.Size = new Size(967, 536);
+            songList_dgv.TabIndex = 19;
+            songList_dgv.CellDoubleClick += songList_dgv_CellDoubleClick;
+            // 
+            // TrackTitle
+            // 
+            TrackTitle.HeaderText = "Title";
+            TrackTitle.Name = "TrackTitle";
+            // 
+            // TrackArtist
+            // 
+            TrackArtist.HeaderText = "Artist";
+            TrackArtist.Name = "TrackArtist";
+            // 
+            // TrackAlbum
+            // 
+            TrackAlbum.HeaderText = "Album";
+            TrackAlbum.Name = "TrackAlbum";
+            // 
+            // TrackGenre
+            // 
+            TrackGenre.HeaderText = "Genre";
+            TrackGenre.Name = "TrackGenre";
             // 
             // MusicPlayer
             // 
@@ -435,8 +475,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1145, 649);
-            Controls.Add(songList);
-            Controls.Add(panel3);
+            Controls.Add(songList_dgv);
             Controls.Add(panel2);
             Controls.Add(panel1);
             Controls.Add(toolStrip1);
@@ -446,13 +485,14 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Music Player";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            panel3.ResumeLayout(false);
-            panel3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackbar).EndInit();
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
+            panel2.ResumeLayout(false);
+            panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)songList_dgv).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -470,7 +510,6 @@
         private Label lblCurrentSong;
         private System.Windows.Forms.Timer timer1;
         private PictureBox pictureBox1;
-        private Panel panel3;
         private Panel panel1;
         private Button btnShowList;
         private Button btnAddtoList;
@@ -487,9 +526,14 @@
         private ToolStripDropDownButton toolStripDropDownButton1;
         private ToolStripDropDownButton toolStripDropDownButton2;
         private Panel panel2;
-        private ListBox songList;
         private ToolStripDropDownButton toolStripDropDownButton3;
         private ToolStripDropDownButton toolStripDropDownButton4;
         private ToolStripDropDownButton toolStripDropDownButton5;
+        private DataGridView songList_dgv;
+        private DataGridViewTextBoxColumn TrackTitle;
+        private DataGridViewTextBoxColumn TrackArtist;
+        private DataGridViewTextBoxColumn TrackAlbum;
+        private DataGridViewTextBoxColumn TrackGenre;
+        private Button btnRemove;
     }
 }

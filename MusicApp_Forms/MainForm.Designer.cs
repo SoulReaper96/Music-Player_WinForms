@@ -429,10 +429,10 @@
             // 
             // songList_dgv
             // 
+            songList_dgv.AllowUserToAddRows = false;
             songList_dgv.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             songList_dgv.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             songList_dgv.BackgroundColor = Color.WhiteSmoke;
-            songList_dgv.BorderStyle = BorderStyle.None;
             songList_dgv.CellBorderStyle = DataGridViewCellBorderStyle.None;
             songList_dgv.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             songList_dgv.Columns.AddRange(new DataGridViewColumn[] { TrackTitle, TrackArtist, TrackAlbum, TrackGenre });

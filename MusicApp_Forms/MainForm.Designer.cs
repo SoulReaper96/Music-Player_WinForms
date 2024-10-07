@@ -33,7 +33,6 @@
             btnPrevious = new Button();
             pbarSong = new ProgressBar();
             lblElapsed = new Label();
-            lblCurrentSong = new Label();
             btnOpen = new Button();
             lblStatus = new Label();
             btnNext = new Button();
@@ -42,9 +41,6 @@
             btnPlay = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
             pictureBox1 = new PictureBox();
-            lblSongGenre = new Label();
-            lblSongAlbum = new Label();
-            lblSongArtist = new Label();
             VolumeTrackbar = new TrackBar();
             panel1 = new Panel();
             btnRemove = new Button();
@@ -59,7 +55,6 @@
             toolStripDropDownButton3 = new ToolStripDropDownButton();
             toolStripDropDownButton4 = new ToolStripDropDownButton();
             toolStripDropDownButton1 = new ToolStripDropDownButton();
-            toolStripDropDownButton5 = new ToolStripDropDownButton();
             toolStripDropDownButton2 = new ToolStripDropDownButton();
             panel2 = new Panel();
             songList_dgv = new DataGridView();
@@ -105,16 +100,6 @@
             lblElapsed.Size = new Size(123, 22);
             lblElapsed.TabIndex = 4;
             lblElapsed.Text = "00:00 / 00:00";
-            // 
-            // lblCurrentSong
-            // 
-            lblCurrentSong.AutoSize = true;
-            lblCurrentSong.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblCurrentSong.Location = new Point(34, 152);
-            lblCurrentSong.Name = "lblCurrentSong";
-            lblCurrentSong.Size = new Size(96, 19);
-            lblCurrentSong.TabIndex = 8;
-            lblCurrentSong.Text = "Track Title:";
             // 
             // btnOpen
             // 
@@ -196,36 +181,6 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.CenterImage;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
-            // 
-            // lblSongGenre
-            // 
-            lblSongGenre.AutoSize = true;
-            lblSongGenre.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblSongGenre.Location = new Point(35, 209);
-            lblSongGenre.Name = "lblSongGenre";
-            lblSongGenre.Size = new Size(63, 19);
-            lblSongGenre.TabIndex = 12;
-            lblSongGenre.Text = "Genre:";
-            // 
-            // lblSongAlbum
-            // 
-            lblSongAlbum.AutoSize = true;
-            lblSongAlbum.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblSongAlbum.Location = new Point(34, 190);
-            lblSongAlbum.Name = "lblSongAlbum";
-            lblSongAlbum.Size = new Size(64, 19);
-            lblSongAlbum.TabIndex = 11;
-            lblSongAlbum.Text = "Album:";
-            // 
-            // lblSongArtist
-            // 
-            lblSongArtist.AutoSize = true;
-            lblSongArtist.Font = new Font("Arial", 12.75F, FontStyle.Bold);
-            lblSongArtist.Location = new Point(34, 171);
-            lblSongArtist.Name = "lblSongArtist";
-            lblSongArtist.Size = new Size(58, 19);
-            lblSongArtist.TabIndex = 10;
-            lblSongArtist.Text = "Artist:";
             // 
             // VolumeTrackbar
             // 
@@ -362,7 +317,7 @@
             // 
             toolStrip1.BackColor = Color.Yellow;
             toolStrip1.Font = new Font("Arial", 10F, FontStyle.Bold);
-            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton3, toolStripDropDownButton4, toolStripDropDownButton1, toolStripDropDownButton5, toolStripDropDownButton2 });
+            toolStrip1.Items.AddRange(new ToolStripItem[] { toolStripDropDownButton3, toolStripDropDownButton4, toolStripDropDownButton1, toolStripDropDownButton2 });
             toolStrip1.Location = new Point(0, 0);
             toolStrip1.Name = "toolStrip1";
             toolStrip1.Size = new Size(1145, 25);
@@ -396,15 +351,6 @@
             toolStripDropDownButton1.Size = new Size(60, 22);
             toolStripDropDownButton1.Text = "Audio";
             // 
-            // toolStripDropDownButton5
-            // 
-            toolStripDropDownButton5.DisplayStyle = ToolStripItemDisplayStyle.Text;
-            toolStripDropDownButton5.Image = (Image)resources.GetObject("toolStripDropDownButton5.Image");
-            toolStripDropDownButton5.ImageTransparentColor = Color.Magenta;
-            toolStripDropDownButton5.Name = "toolStripDropDownButton5";
-            toolStripDropDownButton5.Size = new Size(60, 22);
-            toolStripDropDownButton5.Text = "Video";
-            // 
             // toolStripDropDownButton2
             // 
             toolStripDropDownButton2.DisplayStyle = ToolStripItemDisplayStyle.Text;
@@ -417,10 +363,6 @@
             // panel2
             // 
             panel2.Controls.Add(pictureBox1);
-            panel2.Controls.Add(lblSongGenre);
-            panel2.Controls.Add(lblCurrentSong);
-            panel2.Controls.Add(lblSongAlbum);
-            panel2.Controls.Add(lblSongArtist);
             panel2.Dock = DockStyle.Left;
             panel2.Location = new Point(0, 25);
             panel2.Name = "panel2";
@@ -447,6 +389,7 @@
             songList_dgv.Size = new Size(967, 536);
             songList_dgv.TabIndex = 19;
             songList_dgv.CellDoubleClick += songList_dgv_CellDoubleClick;
+            songList_dgv.SelectionChanged += songList_dgv_SelectionChanged;
             // 
             // TrackTitle
             // 
@@ -483,6 +426,7 @@
             Name = "MusicPlayer";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Music Player";
+            FormClosing += OnFormClosing;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)VolumeTrackbar).EndInit();
             panel1.ResumeLayout(false);
@@ -490,7 +434,6 @@
             toolStrip1.ResumeLayout(false);
             toolStrip1.PerformLayout();
             panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)songList_dgv).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -506,7 +449,6 @@
         private Button btnNext;
         private Button btnOpen;
         private Label lblStatus;
-        private Label lblCurrentSong;
         private System.Windows.Forms.Timer timer1;
         private PictureBox pictureBox1;
         private Panel panel1;
@@ -518,16 +460,12 @@
         private Button btnSettings;
         private Button btnMenu;
         private TrackBar VolumeTrackbar;
-        private Label lblSongArtist;
-        private Label lblSongGenre;
-        private Label lblSongAlbum;
         private ToolStrip toolStrip1;
         private ToolStripDropDownButton toolStripDropDownButton1;
         private ToolStripDropDownButton toolStripDropDownButton2;
         private Panel panel2;
         private ToolStripDropDownButton toolStripDropDownButton3;
         private ToolStripDropDownButton toolStripDropDownButton4;
-        private ToolStripDropDownButton toolStripDropDownButton5;
         private DataGridView songList_dgv;
         private DataGridViewTextBoxColumn TrackTitle;
         private DataGridViewTextBoxColumn TrackArtist;

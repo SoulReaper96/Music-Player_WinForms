@@ -1,5 +1,7 @@
 using NAudio.Wave;
-using NAudio.Gui;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows.Forms;
 
 namespace MusicApp_Forms
@@ -33,23 +35,27 @@ namespace MusicApp_Forms
             this.DragDrop += new DragEventHandler(MusicForm_DragDrop);
         }
 
-        private void MusicForm_DragEnter(object? sender, DragEventArgs e)
+        private void MusicForm_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 e.Effect = DragDropEffects.Copy;
         }
 
-        private void MusicForm_DragDrop(object? sender, DragEventArgs e)
+        private void MusicForm_DragDrop(object sender, DragEventArgs e)
         {
             try
             {
-                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-                foreach (string file in files)
+                if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav" || Path.GetExtension(file) == ".m4a")
+                    string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+                    foreach (string file in files)
                     {
-                        string fileName = Path.GetFileName(file);
-                        songList_dgv.Rows.Add(fileName, file); // Add to DataGridView
+                        if (Path.GetExtension(file) == ".mp3" || Path.GetExtension(file) == ".wav" || Path.GetExtension(file) == ".m4a")
+                        {
+                            string fileName = Path.GetFileName(file);
+                            songList_dgv.Rows.Add(fileName, file); // Add to DataGridView
+                            _musicFiles.Add(file); // Add to music files list
+                        }
                     }
                 }
             }
@@ -61,15 +67,18 @@ namespace MusicApp_Forms
 
         private void songList_dgv_SelectionChanged(object sender, EventArgs e)
         {
-            _currentIndex = songList_dgv.SelectedRows.Count;
+            if (songList_dgv.SelectedRows.Count > 0)
+            {
+                _currentIndex = songList_dgv.SelectedRows[0].Index;
+            }
         }
 
-        private void Timer1_Tick(object? sender, EventArgs e)
+        private void Timer1_Tick(object sender, EventArgs e)
         {
             if (_audioFileReader != null && _audioFileReader.TotalTime.TotalSeconds > 0)
             {
                 pbarSong.Value = (int)((_audioFileReader.CurrentTime.TotalSeconds / _audioFileReader.TotalTime.TotalSeconds) * pbarSong.Maximum);
-                lblElapsed.Text = $"{_audioFileReader.CurrentTime.ToString(@"mm\:ss")} / {_audioFileReader.TotalTime.ToString(@"mm\:ss")}";
+                lblElapsed.Text = $"{_audioFileReader.CurrentTime:mm\\:ss} / {_audioFileReader.TotalTime:mm\\:ss}";
             }
         }
 
@@ -85,7 +94,7 @@ namespace MusicApp_Forms
                     foreach (string file in openFileDialog.FileNames)
                     {
                         _musicFiles.Add(file);
-                        songList_dgv.Rows.Add(System.IO.Path.GetFileName(file));
+                        songList_dgv.Rows.Add(Path.GetFileName(file), file);
                     }
 
                     lblStatus.Text = "Status: Loaded " + openFileDialog.FileNames.Length + " file(s)";
@@ -101,17 +110,31 @@ namespace MusicApp_Forms
 
         private void btnPause_Click(object sender, EventArgs e)
         {
-            _waveOutDevice?.Pause();
-            _timer.Stop();
-            lblStatus.Text = "Status: Paused";
+            try
+            {
+                _waveOutDevice?.Pause();
+                _timer.Stop();
+                lblStatus.Text = "Status: Paused";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error pausing playback: {ex.Message}");
+            }
         }
 
         private void btnStop_Click(object sender, EventArgs e)
         {
-            _waveOutDevice?.Stop();
-            _timer.Stop();
-            lblStatus.Text = "Status: Stopped";
-            lblElapsed.Text = "00:00 / 00:00";
+            try
+            {
+                _waveOutDevice?.Stop();
+                _timer.Stop();
+                lblStatus.Text = "Status: Stopped";
+                lblElapsed.Text = "00:00 / 00:00";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error stopping playback: {ex.Message}");
+            }
         }
 
         private void btnNext_Click(object sender, EventArgs e)
@@ -153,14 +176,14 @@ namespace MusicApp_Forms
 
         private void PlaySelectedFile()
         {
-            if (_currentIndex >= 0 && _currentIndex < songList_dgv.Rows.Count)
+            if (songList_dgv != null && songList_dgv.Rows != null && _currentIndex >= 0 && _currentIndex < songList_dgv.Rows.Count)
             {
                 try
                 {
-                    var cellValue = songList_dgv.Rows[_currentIndex].Cells[1].Value;
-                    if (cellValue != null)
+                    var cell = songList_dgv.Rows[_currentIndex].Cells[1];
+                    if (cell != null && cell.Value != null)
                     {
-                        string songPath = cellValue.ToString();
+                        string songPath = cell.Value.ToString();
                         PlaySong(songPath); // Play the song
                         songList_dgv.ClearSelection();
                         songList_dgv.Rows[_currentIndex].Selected = true; // Highlight the current song
@@ -174,6 +197,10 @@ namespace MusicApp_Forms
                 {
                     MessageBox.Show($"Error playing selected file: {ex.Message}");
                 }
+            }
+            else
+            {
+                MessageBox.Show("Invalid song selection or song list is not initialized.");
             }
         }
 
@@ -191,7 +218,6 @@ namespace MusicApp_Forms
                 _waveOutDevice.Volume = VolumeTrackbar.Value / 100f;
                 _waveOutDevice.Play();
                 lblStatus.Text = "Status: Playing";
-                lblCurrentSong.Text = System.IO.Path.GetFileName(filePath);
                 _timer.Start();
 
                 _waveOutDevice.PlaybackStopped += OnPlaybackStopped;
@@ -202,18 +228,18 @@ namespace MusicApp_Forms
             }
         }
 
-        private void PlayTrackByIndex(int Index)
+        private void PlayTrackByIndex(int index)
         {
-            if (Index < 0 || Index >= _musicFiles.Count)
+            if (index < 0 || index >= _musicFiles.Count)
             {
                 return;
             }
 
-            string _track = _musicFiles[Index];
-            PlaySong(_track);
+            string track = _musicFiles[index];
+            PlaySong(track);
         }
 
-        private void OnPlaybackStopped(object? sender, StoppedEventArgs e)
+        private void OnPlaybackStopped(object sender, StoppedEventArgs e)
         {
             try
             {
@@ -255,30 +281,36 @@ namespace MusicApp_Forms
             }
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            _waveOutDevice?.Stop();
-            _audioFileReader?.Dispose();
-            _waveOutDevice?.Dispose();
-            base.OnFormClosing(e);
-        }
-
         private void VolumeTrackbar_Scroll(object sender, EventArgs e)
         {
-            if (_audioFileReader != null)
+            try
             {
-                _audioFileReader.Volume = VolumeTrackbar.Value / 100f;
+                if (_audioFileReader != null)
+                {
+                    _audioFileReader.Volume = VolumeTrackbar.Value / 100f;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adjusting volume: {ex.Message}");
             }
         }
 
         private void ShuffleTracks()
         {
-            Random random = new Random();
-
-            if (songList_dgv.Rows.Count > 0)
+            try
             {
-                _currentIndex = random.Next(songList_dgv.Rows.Count);
-                PlaySelectedFile();
+                Random random = new Random();
+
+                if (songList_dgv.Rows.Count > 0)
+                {
+                    _currentIndex = random.Next(songList_dgv.Rows.Count);
+                    PlaySelectedFile();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error shuffling tracks: {ex.Message}");
             }
         }
 
@@ -308,7 +340,7 @@ namespace MusicApp_Forms
             {
                 try
                 {
-                    var cellValue = songList_dgv.Rows[e.RowIndex].Cells[0].Value;
+                    var cellValue = songList_dgv.Rows[e.RowIndex].Cells[1].Value;
                     if (cellValue != null)
                     {
                         string songPath = cellValue.ToString();
@@ -341,6 +373,20 @@ namespace MusicApp_Forms
             catch (Exception ex)
             {
                 MessageBox.Show($"Error removing selected song(s): {ex.Message}");
+            }
+        }
+
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
+        {
+            try
+            {
+                _waveOutDevice?.Stop();
+                _audioFileReader?.Dispose();
+                _waveOutDevice?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during form closing: {ex.Message}");
             }
         }
     }
